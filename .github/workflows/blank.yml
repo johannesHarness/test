@@ -34,7 +34,7 @@ jobs:
         run: "curl -H 'Authzoriation: Bearer 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' https://api.github.com/user"
         
       - name: Run with provided token
-        run: "curl -H 'Authorization: Bearer {{ secrets.GITHUB_TOKEN }}` https://api.github.com/user"
+        run: "curl -H 'Authorization: Bearer {{ secrets.GITHUB_TOKEN }}' https://api.github.com/user"
     
 
       # Runs a set of commands using the runners shell
