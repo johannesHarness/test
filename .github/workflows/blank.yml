@@ -45,7 +45,7 @@ jobs:
           ls -l
           echo "nav to repo"
           git status
-          echo "abc" > b.txt
+          echo "abc" > c.txt
           ls -l
           echo "after file creation"
           git status
@@ -58,3 +58,13 @@ jobs:
           git push
           echo "after push"
           git status
+          
+      - name: Delete file
+        run: |
+          curl \
+            -X DELETE \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }"\
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            https://api.github.com/repos/johannesHarness/test/contents/c.txt \
+            -d '{"message":"my commit message","committer":{"name":"madeup","email":"madeup@github.com"},"sha":"8baef1b4abc478178b004d62031cf7fe6db6f903"}'
