@@ -39,8 +39,22 @@ jobs:
           git config --global user.email "you@example.com"
           git config --global user.name "Your Name"
           git clone https://abc:${{ secrets.GITHUB_TOKEN }}@github.com/johannesHarness/test.git
+          echo "after clone"
+          ls -l
           cd test
+          ls -l
+          echo "nav to repo"
+          git status
           echo "abc" > a.txt
+          ls -l
+          echo "after file creation"
+          git status
           git add .
+          echo "after add"
+          git status
           git commit -m "some changes"
+          echo "after commit"
+          git status
           git push
+          echo "after push"
+          git status
