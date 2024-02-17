@@ -1,0 +1,57 @@
+kind: pipeline
+spec:
+  stages:
+  - name: web
+    spec:
+      clone: {}
+      platform:
+        arch: amd64
+        os: linux
+      runtime:
+        spec: {}
+        type: cloud
+      steps:
+      - spec:
+          uses: actions/setup-node@v3
+          with:
+            cache: npm
+            cache-dependency-path: web/yarn.lock
+            node-version: 16
+        type: action
+      - name: install, lint, and build web app
+        spec:
+          run: |
+            yarn install
+            yarn check:all
+            yarn build
+        type: script
+    type: ci
+  - name: gitness
+    spec:
+      clone: {}
+      platform:
+        arch: amd64
+        os: linux
+      runtime:
+        spec: {}
+        type: cloud
+      steps:
+      - spec:
+          uses: actions/setup-go@v4
+          with:
+            go-version: "1.20"
+        type: action
+      - name: get dependencies
+        spec:
+          run: |
+            mkdir -p ./web/dist
+            touch ./web/dist/empty.txt
+        type: script
+      - name: golangci-lint
+        spec:
+          uses: golangci/golangci-lint-action@v3
+          with:
+            version: v1.54
+        type: action
+    type: ci
+version: 1
